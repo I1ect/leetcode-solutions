@@ -6,40 +6,40 @@
  // WIP
 var isValid = function(s) {
     let arr = new Array()
-    if (s[0] == ')' || s[0] == '}' || s[0] == ']') {
-        return false
-    }
+    
+    // Places them into Seperate Arrays
     for (index = 0; index < s.length; index++) {
         if (s[index] == '(' || s[index] == '[' || s[index] == '{') {
             arr.push(s[index])
         }
-        else {
-            if (arr.length > 0 ) {
-                if (s[index] == ')') {
-                    if (arr[arr.length-1] == '(') {
-                        arr.pop()
-                    }
-                    else return false
+        if (s[index] == ')' || s[index] == ']' || s[index] == '}') {
+            if (arr.length > 0) {
+                let current = arr[arr.length - 1]
+                switch (current) {
+                    case '(':
+                        if (s[index] == ')') { arr.pop() }
+                        else {return false}
+                        break;
+                    case '[':
+                        if (s[index] == ']') { arr.pop() }
+                        else {return false}
+                        break;
+                    case '{':
+                        if (s[index] == '}') { arr.pop() }
+                        else {return false}
+                        break;
                 }
-                if (s[index] == ']') {
-                    if (arr[arr.length-1] == '[') {
-                        arr.pop()
-                    }
-                    else return false
-                }
-                if (s[index] == '}') {
-                    if (arr[arr.length-1] == '{') {
-                        arr.pop()
-                    }
-                    else return false
-                }
+            }
+            else {
+                return false
             }
         }
     }
-    if (arr.length == 0) {
-        return true
+
+    if (arr.length > 0) {
+        return false
     }
-    return false
+    return true
 };
 console.log(isValid("()()"))
 console.log("----")
